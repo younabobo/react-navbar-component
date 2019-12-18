@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
   Tabs,
   Tab,
   Icon,
   Drawer,
-  Button,
   List,
   ListItem,
   ListItemIcon,
@@ -16,7 +16,11 @@ import { Link } from "react-router-dom";
 import useWindowSize from "./useWindowSize";
 import { Menu } from "@material-ui/icons";
 
-export default function NavBar({ items }) {
+/**
+ * Generic Navigation bar component that gets its description from props
+ */
+
+function Navbar({ items }) {
   //The current tab
   const [value, setValue] = React.useState(0);
   //Is drawer opened?
@@ -35,7 +39,7 @@ export default function NavBar({ items }) {
       scrollButtons="on"
     >
       {items.map(({ label, icon, Tooltip: tooltip = "", path }) => (
-        <Tooltip title={tooltip}>
+        <Tooltip title={tooltip} key={path}>
           <Tab
             icon={<Icon>{icon}</Icon>}
             label={size.width > parseInt(200 * items.length) ? label : ""}
@@ -58,7 +62,7 @@ export default function NavBar({ items }) {
         >
           <List>
             {items.map(({ label, icon, Tooltip: tooltip = "", path }) => (
-              <Tooltip title={tooltip}>
+              <Tooltip title={tooltip} key={path}>
                 <ListItem button to={`${path}`} component={Link} key={label}>
                   <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText primary={label} />
@@ -72,3 +76,33 @@ export default function NavBar({ items }) {
     </div>
   );
 }
+
+Navbar.propTypes = {
+  /**
+   * The list of items to display in the navigation bar
+   */
+  items: PropTypes.arrayOf(
+    /**
+     * Navigation item
+     */
+    PropTypes.shape({
+      /**
+       * The label of the navigation item
+       */
+      label: PropTypes.string,
+      /**
+       * The Icon component
+       */
+      icon: PropTypes.element,
+      /**
+       * The tooltip/abbreviation to display upon hovering the navigation item
+       */
+      tooltip: PropTypes.string,
+      /**
+       * The path/URL to the target
+       */
+      path: PropTypes.string
+    })
+  ).isRequired
+};
+export default Navbar;
