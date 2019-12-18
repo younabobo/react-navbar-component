@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { AppBar, Toolbar } from "@material-ui/core";
+import Navbar from "./Navbar";
+import ProfileNav from "./PofileNav";
+import { BrowserRouter as Router } from "react-router-dom";
+import { PersonPin, Phone, Favorite, Menu } from "@material-ui/icons";
+// import {} from "@material-ui/icons"
+const items = [
+  {
+    label: "Hello",
+    icon: <Menu />,
+    Tooltip: "Hello world",
+    path: "Hello"
+  },
+  {
+    label: "Person",
+    icon: <Phone />,
+    Tooltip: "Hello world",
+    path: "Person"
+  },
+  {
+    label: "Phone",
+    icon: <Favorite />,
+    Tooltip: "Mobile",
+    path: "Phone"
+  },
+  {
+    label: "Favorite",
+    icon: <PersonPin />,
+    Tooltip: "Favorite",
+    path: "Favorite"
+  }
+];
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Router>
+      <AppBar position="static">
+        <Toolbar
+          style={{
+            display: "flex",
+            justifyContent: "space-between"
+            // backgroundColor: "#DDD"
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <p />
+          <Navbar items={items} />
+        </Toolbar>
+      </AppBar>
+    </Router>
   );
 }
-
-export default App;
